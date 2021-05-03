@@ -16,7 +16,7 @@ const UserSchema = new Schema(
 UserSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/User/' + this._id;
+  return '/user/' + this._id;
 });
 
 //Export model

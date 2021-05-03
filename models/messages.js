@@ -6,7 +6,7 @@ const MessageSchema = new Schema(
   {
     message:{type:String, required:true},
     userName:{type: Schema.Types.ObjectId, ref: 'User', required:true},
-    date:{type:Date, required:true}
+    date:{type:Date, default:Date.now, required:true}
   }
 );
 
@@ -14,7 +14,7 @@ const MessageSchema = new Schema(
 MessageSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/messages/' + this._id;
+  return '/messages/' + this._id;
 });
 
 //Export model
