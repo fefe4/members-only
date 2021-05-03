@@ -1,5 +1,6 @@
 const User = require ('./models/users')
 const { body, validationResult } = require("express-validator");
+const bcrypt = require('bcryptjs')
 
 exports.sign_up_get = function (req, res) {
   res.render("sign-up", { title: "sign up" });
@@ -40,27 +41,29 @@ exports.sign_up_post = [
     .withMessage("must contain a capital letter")
     .escape(),
 
-  function (req, res, next) {
-    const errors = validationResult(req);
+  body("confirmPassword", 'confirmPassword field must have the same value as the password field').exists().custom((value, { req }) => value === req.body.password).escape(),
 
-    const user = new User({
-      firstName: req.body.firstname,
-      lastName: req.body.lastname,
-      userName: req.body.username,
-      password: req.body.password,
-      membership: "no"
-
-    })
-
-    if(!errors.isEmpty()){
-      res.render('sign-up')
-    }
-    else {
-      user.save(function (err) {
-        if (err) { return next(err); }
-           //successful - redirect to new book record.
-           res.redirect('/');
-        });
-    }
-  }
+    function (req, res, next) {
+      const errors = validationResult(req);
+      bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+        
+        const user = new User({
+          firstName: req.body.firstname,
+          lastName: req.body.lastname,
+          userName: req.body.username,
+          password: hashedPassword,
+          membership: "no"    
+        }) 
+        if(!errors.isEmpty()){
+          res.render('sign-up')
+        }
+        else {
+          user.save(function (err) {
+            if (err) { return next(err); }
+               //successful - redirect to new book record.
+               res.redirect('/');
+            });
+        } // otherwise, store hashedPassword in DB
+      }) 
+    }  
 ];
