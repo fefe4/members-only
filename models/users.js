@@ -1,0 +1,23 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema(
+  {
+    firstName: {type: String, required: true},
+    lastName: {type: String, required: true},
+    userName: {type: String, required: true},
+    password: {type: String, required: true},
+    membership: {type: String, required: true}
+  }
+);
+
+// Virtual for User's URL
+UserSchema
+.virtual('url')
+.get(function () {
+  return '/catalog/User/' + this._id;
+});
+
+//Export model
+module.exports = mongoose.model('User', UserSchema);
