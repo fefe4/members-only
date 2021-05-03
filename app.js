@@ -7,7 +7,25 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+
+require('dotenv').config()
+//Set up default mongoose connection
+var mongoose = require('mongoose');
+var mongoDB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.abzzp.mongodb.net/Members-only?retryWrites=true&w=majority`;
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 var app = express();
+
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
