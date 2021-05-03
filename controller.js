@@ -61,9 +61,13 @@ exports.sign_up_post = [
           user.save(function (err) {
             if (err) { return next(err); }
                //successful - redirect to new book record.
-               res.redirect('/');
+               res.redirect('/club');
             });
         } // otherwise, store hashedPassword in DB
       }) 
     }  
 ];
+
+exports.club_get = function (req, res) {
+  res.render('club')
+}
