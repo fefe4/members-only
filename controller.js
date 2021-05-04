@@ -1,13 +1,16 @@
 const User = require ('./models/users')
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs')
+const async = require('async')
+
+require('dotenv').config()
 
 exports.sign_up_get = function (req, res) {
   res.render("sign-up", { title: "sign up" });
 };
 
 exports.sign_up_post = [
-
+  
   //validate-sanitize form
   //first name
   body("firstname", "first name, can not be empty")
@@ -60,8 +63,8 @@ exports.sign_up_post = [
         else {
           user.save(function (err) {
             if (err) { return next(err); }
-               //successful - redirect to new book record.
-               res.redirect('/club');
+               //successful - redirect to membership authentication.
+               res.redirect(`/club${user.url}`);
             });
         } // otherwise, store hashedPassword in DB
       }) 
@@ -71,3 +74,40 @@ exports.sign_up_post = [
 exports.club_get = function (req, res) {
   res.render('club')
 }
+
+exports.club_post = [
+body("code").trim().equals(process.env.CODE).escape(),
+
+function(req, res, next){
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.redirect('/club/')
+  }
+  else{
+    async.parallel({
+      user: function(callback) {
+        User.findById(req.params.id).exec(callback)
+      }
+    }, function(results, err) {
+      if (err) { return next(err); } 
+      const user = new User ({
+        firstName: results.user.firstname,
+        lastName: results.user.lastname,
+        userName: results.user.username,
+        password: results.user.password,
+
+        membership: "member"    
+      })
+
+      User.findByIdAndUpdate(req.params.id, user, {}, function (err,theuser) {
+        if (err) { return next(err); }
+           // Successful - redirect to book detail page.
+           res.redirect(`club/${theuser.url}`);
+      });  
+    });  
+      
+  }
+}
+
+
+]

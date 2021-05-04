@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/sign-up', controller.sign_up_get)
 router.post('/sign-up', controller.sign_up_post)
-router.get ('/club', controller.club_get)
+router.get ('/club/user/:id', controller.club_get)
+router.post('/club/user/:id', controller.club_post)
 
 module.exports = router;
