@@ -1,0 +1,13 @@
+{{#if currentUser}}
+{{currentUser.userName}}
+  <main>
+    <form method="POST" action="" >
+      <input name="user" value={{currentUser.userName}}  type="hidden">
+      <label for="message">Write new message</label>
+      <input name="message" type="text">
+      <button type="submit">Comment!</button>
+    </form>  
+  </main>
+{{/if}}
+
+
