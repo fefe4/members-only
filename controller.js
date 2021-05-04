@@ -107,7 +107,13 @@ function(req, res, next){
     });  
       
   }
-}
+}]
 
+exports.login_get = function (req, res) {
+  res.render('login-form')
+} 
 
+exports.login_post = [
+
+  
 ]
