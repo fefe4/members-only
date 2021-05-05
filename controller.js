@@ -61,7 +61,7 @@ exports.sign_up_post = [
         lastName: req.body.lastname,
         userName: req.body.username,
         password: hashedPassword,
-        membership: "no",
+        membership: false,
       });
       if (!errors.isEmpty()) {
         res.render("sign-up");
@@ -96,28 +96,29 @@ exports.club_post = [
             User.findById(req.params.id).exec(callback);
           },
         },
-        function (results, err) {
+        function (err, results) {
+          console.log(results.user)
           if (err) {
             return next(err);
           }
           const user = new User({
+            _id:results.user._id,
             firstName: results.user.firstname,
             lastName: results.user.lastname,
             userName: results.user.username,
             password: results.user.password,
-
-            membership: "member",
+            membership: true,
           });
-
+          console.log(user)
           User.findByIdAndUpdate(
-            req.params.id,
+            results.user._id,
             user,
             {},
             function (err, theuser) {
               if (err) {
                 return next(err);
               }
-              // Successful - redirect to book detail page.
+              // Successful - redirect to some place.
               res.redirect(`club/${theuser.url}`);
             }
           );
@@ -146,7 +147,7 @@ exports.new_Message_post =  [
       console.log(found_userName)
       if (err) {return next(err)}
       else {
-        
+
         const errors = validationResult(req);
         const message = new Message({
           message: req.body.message,

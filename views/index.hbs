@@ -1,9 +1,23 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<main>
+ 
 
-{{#if currentUser}}
-  "Hi there"  
-  <a href="/new-message">"create new message"</a>
-  <a href="/log-out">LOG OUT</a>
-{{/if}}
+
+
+<h1>Welcome to ? Club</h1>
+
+{{#each messages}}
+  <article>
+    <header>
+      {{#if currentUser.membership}}
+      <h5>{{userName.userName}} said:</h5>
+      {{else}}
+      <h5>Someone said:</h5>
+      {{/if}}
+      <span>{{date_formatted}}</span>
+    </header>
+    <p>{{message}}</p>
+  </article>
+{{/each}}
+
+</main>
 

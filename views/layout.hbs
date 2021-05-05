@@ -5,6 +5,18 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <nav>
+      <ul>
+      {{#if currentUser}}
+        "Hi there"  
+        <li><a href="/new-message">"create new message"</a></li>
+        <li><a href="/log-out">LOG OUT</a></li>
+      {{else}}
+        <li><a href="/sign-up">SIGN-UP</a></li>
+        <li><a href="/log-in">LOG-IN</a></li>
+      {{/if}}
+    </ul>
+    </nav>
     {{{body}}}
   </body>
 </html>
