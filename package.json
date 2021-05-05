@@ -1,9 +1,6 @@
 {
   "name": "members-only",
   "version": "0.0.0",
-  "engines": {
-    "node": "15.5.1"
-  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -14,7 +11,6 @@
     "async": "^3.2.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
-    "connect-mongo": "^4.4.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
