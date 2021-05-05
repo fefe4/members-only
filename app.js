@@ -7,11 +7,11 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
-
+const dotenv = require("dotenv");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
-require("dotenv").config();
+dotenv.config();
 //Set up default mongoose connection
 const mongoose = require("mongoose");
 var dev_db_url= `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.abzzp.mongodb.net/Members-only?retryWrites=true&w=majority`;
