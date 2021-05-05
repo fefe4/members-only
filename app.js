@@ -14,7 +14,7 @@ const usersRouter = require("./routes/users");
 require("dotenv").config();
 //Set up default mongoose connection
 const mongoose = require("mongoose");
-const mongoDB = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.abzzp.mongodb.net/Members-only?retryWrites=true&w=majority`;
+const mongoDB = `mongodb+srv://fefe:pb1SwQAxDRYID5ET@cluster0.abzzp.mongodb.net/Members-only?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 const db = mongoose.connection;
