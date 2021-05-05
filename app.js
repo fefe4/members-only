@@ -10,6 +10,7 @@ const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const MongoStore = require('connect-mongo')(session);
 
 dotenv.config();
 //Set up default mongoose connection
